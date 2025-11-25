@@ -30,18 +30,86 @@ class _TaskListScreenState extends State<TaskListScreen> {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
+      extendBodyBehindAppBar: false,
       appBar: AppBar(
-        title: const Text(AppConstants.appTitle),
+        title: Row(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: theme.colorScheme.primaryContainer,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Icon(
+                Icons.task_rounded,
+                color: theme.colorScheme.primary,
+                size: 24,
+              ),
+            ),
+            const SizedBox(width: 12),
+            const Text(
+              AppConstants.appTitle,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                letterSpacing: -0.5,
+              ),
+            ),
+          ],
+        ),
+        elevation: 0,
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                theme.colorScheme.primary,
+                theme.colorScheme.primary.withValues(
+                  red: (theme.colorScheme.primary.r * 0.8).clamp(0, 1),
+                  green: (theme.colorScheme.primary.g * 0.8).clamp(0, 1),
+                  blue: (theme.colorScheme.primary.b * 1.2).clamp(0, 1),
+                ),
+              ],
+            ),
+          ),
+        ),
         actions: [
           BlocBuilder<TaskBloc, TaskState>(
             builder: (context, state) {
               if (state is TaskLoaded && state.tasks.isNotEmpty) {
                 return Padding(
                   padding: const EdgeInsets.only(right: 8),
-                  child: Center(
-                    child: Text(
-                      '${state.tasks.length} ${state.tasks.length == 1 ? 'task' : 'tasks'}',
-                      style: theme.textTheme.titleSmall,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 6,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withValues(alpha: 0.2),
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(
+                        color: Colors.white.withValues(alpha: 0.3),
+                        width: 1.5,
+                      ),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          Icons.check_circle_outline_rounded,
+                          size: 16,
+                          color: Colors.white,
+                        ),
+                        const SizedBox(width: 6),
+                        Text(
+                          '${state.tasks.length}',
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 );
@@ -49,12 +117,20 @@ class _TaskListScreenState extends State<TaskListScreen> {
               return const SizedBox.shrink();
             },
           ),
-          IconButton(
-            icon: Icon(
-              isDarkMode ? Icons.light_mode : Icons.dark_mode,
+          Container(
+            margin: const EdgeInsets.only(right: 8),
+            decoration: BoxDecoration(
+              color: Colors.white.withValues(alpha: 0.2),
+              borderRadius: BorderRadius.circular(12),
             ),
-            onPressed: widget.onToggleTheme,
-            tooltip: 'Toggle theme',
+            child: IconButton(
+              icon: Icon(
+                isDarkMode ? Icons.light_mode_rounded : Icons.dark_mode_rounded,
+                color: Colors.white,
+              ),
+              onPressed: widget.onToggleTheme,
+              tooltip: 'Toggle theme',
+            ),
           ),
         ],
       ),
@@ -128,7 +204,7 @@ class _TaskListScreenState extends State<TaskListScreen> {
           return const EmptyState();
         },
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton.extended(
         onPressed: () async {
           final taskBloc = context.read<TaskBloc>();
           await Navigator.push(
@@ -142,7 +218,15 @@ class _TaskListScreenState extends State<TaskListScreen> {
           );
         },
         tooltip: 'Add Task',
-        child: const Icon(Icons.add),
+        icon: const Icon(Icons.add_rounded, size: 24),
+        label: const Text(
+          'New Task',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 16,
+          ),
+        ),
+        elevation: 6,
       ),
     );
   }

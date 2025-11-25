@@ -71,36 +71,85 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text(AppConstants.addTaskTitle),
+        title: Row(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: theme.colorScheme.primaryContainer,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Icon(
+                Icons.add_task_rounded,
+                color: theme.colorScheme.primary,
+                size: 20,
+              ),
+            ),
+            const SizedBox(width: 12),
+            const Text(
+              AppConstants.addTaskTitle,
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+          ],
+        ),
         leading: IconButton(
-          icon: const Icon(Icons.close),
+          icon: const Icon(Icons.close_rounded),
           onPressed: () => Navigator.pop(context),
         ),
       ),
       body: Form(
         key: _formKey,
         child: ListView(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(20),
           children: [
+            Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: theme.colorScheme.primaryContainer.withValues(alpha: 0.3),
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(
+                  color: theme.colorScheme.primary.withValues(alpha: 0.2),
+                ),
+              ),
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.info_outline_rounded,
+                    color: theme.colorScheme.primary,
+                    size: 24,
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Text(
+                      'Fill in the details to create your new task',
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                        color: theme.colorScheme.onSurface,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 24),
             TextFormField(
               controller: _titleController,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 labelText: AppConstants.titleLabel,
                 hintText: AppConstants.titleHint,
-                prefixIcon: Icon(Icons.title),
+                prefixIcon: Icon(Icons.title_rounded, color: theme.colorScheme.primary),
               ),
               textInputAction: TextInputAction.next,
               validator: _validateTitle,
               enabled: !_isLoading,
               autofocus: true,
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 20),
             TextFormField(
               controller: _descriptionController,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 labelText: AppConstants.descriptionLabel,
                 hintText: AppConstants.descriptionHint,
-                prefixIcon: Icon(Icons.description),
+                prefixIcon: Icon(Icons.description_rounded, color: theme.colorScheme.primary),
                 alignLabelWithHint: true,
               ),
               maxLines: 5,
@@ -108,28 +157,30 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
               enabled: !_isLoading,
               onFieldSubmitted: (_) => _saveTask(),
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: 32),
             Row(
               children: [
                 Expanded(
-                  child: OutlinedButton(
+                  child: OutlinedButton.icon(
                     onPressed: _isLoading ? null : () => Navigator.pop(context),
                     style: OutlinedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 16),
+                      side: BorderSide(color: theme.colorScheme.outline),
                     ),
-                    child: const Text(AppConstants.cancelButton),
+                    icon: const Icon(Icons.close_rounded),
+                    label: const Text(AppConstants.cancelButton),
                   ),
                 ),
                 const SizedBox(width: 16),
                 Expanded(
-                  child: ElevatedButton(
+                  child: FilledButton.icon(
                     onPressed: _isLoading ? null : _saveTask,
-                    style: ElevatedButton.styleFrom(
+                    style: FilledButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 16),
                       backgroundColor: theme.colorScheme.primary,
                       foregroundColor: theme.colorScheme.onPrimary,
                     ),
-                    child: _isLoading
+                    icon: _isLoading
                         ? SizedBox(
                             height: 20,
                             width: 20,
@@ -140,7 +191,8 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                               ),
                             ),
                           )
-                        : const Text(AppConstants.saveButton),
+                        : const Icon(Icons.check_rounded),
+                    label: const Text(AppConstants.saveButton),
                   ),
                 ),
               ],
