@@ -5,6 +5,7 @@ A modern, feature-rich Flutter task management application built with Clean Arch
 ## 📱 Features
 
 ### Core Features
+
 - ✅ **Create Tasks** - Add new tasks with title and description
 - ✅ **View Tasks** - Browse all tasks in a clean, organized list
 - ✅ **Update Tasks** - Edit existing task details
@@ -15,6 +16,7 @@ A modern, feature-rich Flutter task management application built with Clean Arch
 - ✅ **Task Count** - Display total number of tasks in app bar
 
 ### Advanced Features
+
 - 🎨 **Light & Dark Mode** - Toggle between themes with persistent storage
 - 💾 **Local Persistence** - Tasks saved locally using SharedPreferences
 - 🚀 **Quick Actions** - iOS/Android home screen shortcuts for quick access
@@ -71,27 +73,31 @@ lib/
 ### Architecture Layers Explained
 
 #### 1. **Domain Layer** (Business Logic)
-   - **Entities**: Core business objects (Task)
-   - **Repository Interfaces**: Defines contracts for data operations
-   - **Pure Dart**: No framework dependencies
+
+- **Entities**: Core business objects (Task)
+- **Repository Interfaces**: Defines contracts for data operations
+- **Pure Dart**: No framework dependencies
 
 #### 2. **Data Layer** (Data Management)
-   - **Models**: Data transfer objects with JSON serialization
-   - **Data Sources**: Handles data persistence (SharedPreferences)
-   - **Repository Implementation**: Implements domain repository interfaces
-   - **Error Handling**: Manages data-related errors
+
+- **Models**: Data transfer objects with JSON serialization
+- **Data Sources**: Handles data persistence (SharedPreferences)
+- **Repository Implementation**: Implements domain repository interfaces
+- **Error Handling**: Manages data-related errors
 
 #### 3. **Presentation Layer** (UI)
-   - **BLoC**: State management using flutter_bloc
-   - **Screens**: UI pages/routes
-   - **Widgets**: Reusable UI components
-   - **State Management**: Event-driven architecture
+
+- **BLoC**: State management using flutter_bloc
+- **Screens**: UI pages/routes
+- **Widgets**: Reusable UI components
+- **State Management**: Event-driven architecture
 
 ## 🎯 State Management - BLoC Pattern
 
 The app uses **flutter_bloc** for state management:
 
 ### Events (User Actions)
+
 - `LoadTasks` - Load all tasks from storage
 - `AddTask` - Add a new task
 - `UpdateTask` - Update existing task
@@ -99,12 +105,14 @@ The app uses **flutter_bloc** for state management:
 - `RefreshTasks` - Refresh task list
 
 ### States (UI States)
+
 - `TaskInitial` - Initial state
 - `TaskLoading` - Loading state (shows spinner)
 - `TaskLoaded` - Success state with task list
 - `TaskError` - Error state with error message
 
 ### BLoC Flow
+
 ```
 User Action → Event → BLoC → Repository → Data Source → Storage
                 ↓
@@ -116,6 +124,7 @@ User Action → Event → BLoC → Repository → Data Source → Storage
 ## 💾 Data Storage
 
 ### SharedPreferences Implementation
+
 - Tasks stored as **JSON array** in SharedPreferences
 - Each task has unique **UUID** identifier
 - Theme preference persisted across app launches
@@ -123,6 +132,7 @@ User Action → Event → BLoC → Repository → Data Source → Storage
 - Error handling for corrupted data
 
 ### Task Model Structure
+
 ```dart
 {
   "id": "uuid-v4",
@@ -141,26 +151,27 @@ dependencies:
     sdk: flutter
 
   # State Management
-  flutter_bloc: ^8.1.3      # BLoC pattern implementation
-  equatable: ^2.0.5         # Value equality for states/events
+  flutter_bloc: ^8.1.3 # BLoC pattern implementation
+  equatable: ^2.0.5 # Value equality for states/events
 
   # Local Storage
   shared_preferences: ^2.2.2 # Local data persistence
 
   # Utilities
-  intl: ^0.18.1             # Internationalization & date formatting
-  uuid: ^4.2.1              # Generate unique IDs
+  intl: ^0.18.1 # Internationalization & date formatting
+  uuid: ^4.2.1 # Generate unique IDs
 
   # Quick Actions
-  quick_actions: ^1.0.7     # Home screen shortcuts (iOS/Android)
+  quick_actions: ^1.0.7 # Home screen shortcuts (iOS/Android)
 
   # UI
-  cupertino_icons: ^1.0.8   # iOS-style icons
+  cupertino_icons: ^1.0.8 # iOS-style icons
 ```
 
 ## 🚀 Getting Started
 
 ### Prerequisites
+
 - Flutter SDK: ^3.10.1
 - Dart SDK: ^3.10.1
 - iOS Simulator / Android Emulator / Physical Device
@@ -168,24 +179,29 @@ dependencies:
 ### Installation
 
 1. **Clone or Download the Project**
+
    ```bash
    cd koders_assignment
    ```
 
 2. **Install Dependencies**
+
    ```bash
    flutter pub get
    ```
 
 3. **Run the App**
+
    ```bash
    flutter run
    ```
 
 4. **Build APK (Android)**
+
    ```bash
    flutter build apk --release
    ```
+
    APK will be located at: `build/app/outputs/flutter-apk/app-release.apk`
 
 5. **Build IPA (iOS)**
@@ -196,18 +212,21 @@ dependencies:
 ## 🎨 Theme Support
 
 ### Light Mode
+
 - Primary Color: Purple (#6200EE)
 - Background: Light gray (#FAFAFA)
 - Surface: White (#FFFFFF)
 - Modern, clean appearance
 
 ### Dark Mode
+
 - Primary Color: Light purple (#BB86FC)
 - Background: Dark gray (#121212)
 - Surface: Darker gray (#1E1E1E)
 - OLED-friendly, eye-comfortable
 
 ### Theme Toggle
+
 - Icon button in app bar
 - Persists across app restarts
 - Smooth transition animations
@@ -216,30 +235,37 @@ dependencies:
 ## ⚡ Quick Actions
 
 ### iOS
+
 Long-press app icon to reveal:
+
 - **Add New Task** - Opens add task screen
 - **View Tasks** - Opens main task list
 
 ### Android
+
 Long-press app icon (Android 7.1+) to reveal:
+
 - **Add New Task** - Opens add task screen
 - **View Tasks** - Opens main task list
 
 ## 🎯 Key Implementation Details
 
 ### Form Validation
+
 - **Title**: Required, minimum 3 characters
 - **Description**: Optional
 - Real-time validation feedback
 - Error messages displayed inline
 
 ### Error Handling
+
 - Try-catch blocks in data layer
 - User-friendly error messages via SnackBars
 - Retry functionality on errors
 - Graceful handling of corrupted data
 
 ### UI/UX Features
+
 - **8dp Grid System** - Consistent spacing
 - **Material 3 Components** - Modern design
 - **Smooth Animations** - Card transitions, page routes
@@ -249,6 +275,7 @@ Long-press app icon (Android 7.1+) to reveal:
 - **Confirmation Dialogs** - Prevent accidental deletions
 
 ### Performance Optimizations
+
 - **Const Constructors** - Reduces widget rebuilds
 - **Efficient State Management** - Only rebuilds necessary widgets
 - **Lazy Loading** - ListView.builder for large lists
@@ -257,18 +284,15 @@ Long-press app icon (Android 7.1+) to reveal:
 ## 🧪 Testing
 
 Run tests:
+
 ```bash
 flutter test
-```
-
-Run with coverage:
-```bash
-flutter test --coverage
 ```
 
 ## 🐛 Known Issues & Future Improvements
 
 ### Potential Improvements
+
 1. **Search Functionality** - Search tasks by title/description
 2. **Task Categories** - Organize tasks into categories
 3. **Due Dates** - Add deadline tracking
@@ -279,36 +303,6 @@ flutter test --coverage
 8. **Cloud Sync** - Firebase/backend integration
 9. **Notifications** - Reminder notifications
 10. **Task Statistics** - Visualize task completion rates
-
-### Testing Coverage
-- Unit tests for BLoC
-- Widget tests for UI components
-- Integration tests for user flows
-- Repository tests for data layer
-
-## 📄 License
-
-This project is created for educational purposes as part of a coding assignment.
-
-## 👨‍💻 Development Time
-
-Approximate development time: 3-4 hours
-
-## 🤝 Contributing
-
-This is an assignment project. For production use:
-1. Add comprehensive tests
-2. Implement CI/CD pipeline
-3. Add analytics/crash reporting
-4. Enhance error handling
-5. Add more features from improvements list
-
-## 📞 Support
-
-For issues or questions, please check:
-- Flutter documentation: https://docs.flutter.dev
-- BLoC documentation: https://bloclibrary.dev
-- SharedPreferences: https://pub.dev/packages/shared_preferences
 
 ---
 
